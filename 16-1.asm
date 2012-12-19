@@ -87,12 +87,6 @@ fin:
 	pop bp
 	ret
 start:
-	mov ax,data
-	mov ds,ax
-	inint ax
-	push ax
-	inint ax
-	push ax
 	call nok777
     finish
 code ends
