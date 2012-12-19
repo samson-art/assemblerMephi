@@ -1,9 +1,3 @@
-; ─ы  ъюЁЁхъЄэюую юЄюсЁрцхэш  Ёєёёъшї сєът шёяюы№чєщЄх
-; ъюфшЁютъє 866 (т Notepad++: ьхэ■ ╩юфшЁютъш - ╩юфшЁютъш -
-; ╩шЁшыышЎр - OEM 866).
-; Если текст, начиная с этой строки, читается нормально,
-; то файл в правильной кодировке.
-
 include io.asm ;подключение операций ввода-вывода
 
 stack segment stack
@@ -11,22 +5,22 @@ stack segment stack
 stack ends
 
 data segment
-; место для переменных и констант
 
 data ends
 
 code segment 'code'
 	assume ss:stack, ds:data, cs:code
-; место для описания процедур
+
 nok777:
 	push bp
 	mov bp, sp
 a equ word ptr [bp+4]
 b equ word ptr [bp+6]
 sub sp, 10
+.186	
+	pusha
 nod equ word ptr [bp-2]
 nok equ word ptr [bp-4]
-	;sub sp, 10
 ma equ word ptr [bp-6]
 mb equ word ptr [bp-8]
 	mov ax, a
@@ -55,8 +49,6 @@ l1: xchg ax, bx
 
 ex:	
 	mov nod, bx
-	outint nod
-	newline
 	mov ax, ma
 	mov bx, mb
 	cwd
@@ -75,11 +67,12 @@ lll:
 ll: xchg ax, bx	
 	jmp lll
 nok1:
-	outint nok
+	mov ax, nok
 	cmp nok, 0
 	jl fin
 	xor dx,dx
 	mov cx, 1
+	mov es, sp
 l123:
 	imul cx
 	push ax
@@ -87,18 +80,15 @@ l123:
 	cmp dx, 0
 	jz l123
 	pop ax
-	mov nok,ax
 fin:
-	newline 
-	outint nok 
-	mov sp, bp
+	mov sp, es
+	popa
+	add sp, 10
 	pop bp
 	ret
 start:
 	mov ax,data
 	mov ds,ax
-; команды программы должны располагаться здесь
-	
 	inint ax
 	push ax
 	inint ax
