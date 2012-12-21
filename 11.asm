@@ -14,7 +14,7 @@ code segment 'code'
 	assume ss:stack, ds:data, cs:code
 inword8:
 	push bp
-	mov bp, sp	; áâ¤
+	mov bp, sp	; ï¿½ï¿½ï¿½
 	sub sp,8
 	push cx
 	push ax
@@ -65,6 +65,7 @@ l2:	add iax, ax
 	pop bx
 	pop cx	
 	pop ax
+	mov sp, bp
 	pop bp	
 	ret 
 start:
