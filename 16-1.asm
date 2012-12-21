@@ -1,4 +1,4 @@
-include io.asm ;¯®¤ª«îç¥­¨¥ ®¯¥à æ¨© ¢¢®¤ -¢ë¢®¤ 
+include io.asm ;ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ç¥­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½æ¨© ï¿½ï¿½ï¿½ï¿½ï¿½-ï¿½ë¢®ï¿½ï¿½
 
 stack segment stack
 	dw 1024 dup (?)
@@ -84,6 +84,7 @@ fin:
 	mov sp, es
 	popa
 	add sp, 10
+	mov sp,bp
 	pop bp
 	ret
 start:
