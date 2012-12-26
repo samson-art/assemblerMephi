@@ -1,0 +1,45 @@
+# первая версия программы с неверным алгоритмом решения. (отправлял на почту)
+include io.asm 
+
+stack segment stack
+  dw 1536 dup (?)
+stack ends
+
+data segment
+	a db 2
+	b db 3
+	c db 5
+data ends
+
+code segment 'code'
+	assume ss:stack, ds:data, cs:code
+	mp:
+	push ax
+	div a
+	cmp ah, 0
+	jnz ex
+	div b
+	cmp ah, 0
+	jnz ex
+	div c
+	cmp ah, 0
+	jnz ex
+	pop ax
+	outint ax
+	newline
+	jmp l2
+	ex:	pop ax
+l2:
+	ret
+start:
+	mov ax,data
+	mov ds,ax
+	inint cx
+	mov ax, 0
+l1:	inc ax
+	call mp
+	cmp ax, cx
+	jna l1  
+    finish
+code ends
+    end start 
