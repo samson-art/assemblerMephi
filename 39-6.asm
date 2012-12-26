@@ -1,11 +1,12 @@
-include io.asm ;¯®€ª«îç¥­š¥ ®¯¥à æš© ¢¢®€ -¢ë¢®€ 
+# программа работает некорректно(
+
+include io.asm 
 
 stack segment stack
   dw 128 dup (?)
 stack ends
 
 data segment
-; ¬¥áâ® €«ï ¯¥à¥¬¥­­ëå š ª®­áâ ­â
 	x2 dw 100 dup (?)
 	f2 dw 0
 	l2 dw 0
@@ -21,8 +22,7 @@ data ends
 	
 code segment 'code'
 	assume ss:stack, ds:data, cs:code
-; ¬¥áâ® €«ï ®¯šá ­šï ¯à®æ¥€ãà
-ochred:					; t ¢ áâ¥ª¥
+ochred:				
 	push bp
 	mov bp, sp
 t equ word ptr [bp+4]
@@ -39,7 +39,7 @@ t equ word ptr [bp+4]
 	mov cx, 2
 	mul cx
 	mov x2[bx], ax
-	inc l2				; €®¡ ¢š«š í«¥¬¥­â ¢ ®ç¥à¥€ì x2
+	inc l2				; добавляем элемент в x2
 	
 	mov ax, f3
 	add ax, l3
@@ -51,7 +51,7 @@ t equ word ptr [bp+4]
 	mov cx, 3
 	mul cx
 	mov x2[bx], ax
-	inc l3					; €®¡ ¢š«š í«¥¬¥­â ¢ x3
+	inc l3				; добавляем элемент в x3
 	
 	mov ax, f5
 	add ax, l5
@@ -63,13 +63,13 @@ t equ word ptr [bp+4]
 	mov cx, 5
 	mul cx
 	mov x2[bx], ax
-	inc l5					; €®¡ ¢š«š í«¥¬¥­â ¢ x5
+	inc l5				; добавляем элемент в x5
 
 	popa
 	pop bp
 	ret
 	
-min: 			;¢®§¢à éï¥âáï ¢ ax
+min: 			;		; выбираем наименьший элемент из очередей
 	push bp 
 	mov bp, sp
 .186
@@ -105,7 +105,7 @@ fin:
 	pop bp
 ret
 
-minus:
+minus:				; берем минимальный элемент из очереди
 	push bp 
 	mov bp, sp
 .186
@@ -178,25 +178,24 @@ ret
 start:
 	mov ax,data
 	mov ds,ax
-; ª®¬ ­€ë ¯à®£à ¬¬ë €®«Š­ë à á¯®« £ âìáï §€¥áì
 	mov bx, f2
 	mov x2[bx], 2
 	mov bx, f3
 	mov x3[bx], 3
 	mov bx, f5
-	mov x5[bx], 5		; § € «š ­ ç «­®¥ §­ ç¥­š¥ ®ç¥à¥€š
-	inint ax			; ¢¢®€š¬ §­ ç¥­š¥ ª
+	mov x5[bx], 5		
+	inint ax		
 	mov k, ax
 	mov ax, 2
 begin:
 	
-	call min
+	call min		; выбираем минимальный элемент из очередей
 	push ax
-	call ochred
-	call minus
-	cmp ax, k
-	ja final
-	outword ax
+	call ochred		; добавляем элементы в очередь
+	call minus		; достаем из очереди минимальные элементы
+	cmp ax, k		; сравниваем с введенным числом
+	ja final		; если больше то конец программы
+	outword ax		; выводим число
 	newline
 	
 	
