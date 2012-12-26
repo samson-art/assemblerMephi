@@ -1,5 +1,5 @@
-; 	as otherwise specified I will count the number of unsigned
-;	and that the number is ended with a char 'o'
+; 	так как не оговорено иное, буду считать введенное число беззнаковым 
+;	и то, что оно заканчивается символом 'o' (oct).
 include io.asm
 
 stack segment stack
