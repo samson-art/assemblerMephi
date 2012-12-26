@@ -14,7 +14,7 @@ code segment 'code'
 	assume ss:stack, ds:data, cs:code
 inword8:
 	push bp
-	mov bp, sp	; ���
+	mov bp, sp	
 	sub sp,8
 	push cx
 	push ax
@@ -29,7 +29,7 @@ inword8:
 	mov i, 0
 	mov occ, 8
 	
-	mov cx, sp
+	mov cx, sp   ; чтобы далее узнать когда прервать цикл
 
 input:	
 	inch al
@@ -38,29 +38,28 @@ input:
 	sub al, 48
 	mov ah, 0
 	push ax
-	jmp input
-
+	jmp input		; посимвольно считываем число пока не встретим символ 'o' 
+				; и закидываем в стек
 obr:	
 l:	pop ax
 	mov bx, 0
-	;dec cx
 l1:	
 	cmp i, bx	
 	jz l2
 	mul occ
 	
 	inc bx
-	jmp l1
+	jmp l1			; получили нужную степень восьмёрки 
 l2:	add iax, ax
 	adc idx, dx
 	inc i
-	cmp cx, sp
+	cmp cx, sp		; прибавляем результат в локальные переменные
 	jnz l
 	
 	mov dx, idx
-	mov ax, iax		; result saved in dx:ax
+	mov ax, iax		; достаем в dx:ax результат задачи
 	
-	add sp, 8		; std
+	add sp, 8		
 	pop dx
 	pop bx
 	pop cx	
@@ -71,7 +70,6 @@ l2:	add iax, ax
 start:
 	mov ax,data
 	mov ds,ax
-	
 	call inword8
     finish
 code ends
