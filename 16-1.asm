@@ -19,10 +19,10 @@ b equ word ptr [bp+6]
 sub sp, 10
 .186	
 	pusha
-nod equ word ptr [bp-2]
-nok equ word ptr [bp-4]
-ma equ word ptr [bp-6]
-mb equ word ptr [bp-8]
+nod equ word ptr [bp-2]	; тут НОД
+nok equ word ptr [bp-4]	; тут Н(аименьшее)ОК
+ma equ word ptr [bp-6]	; тут храним модуль а
+mb equ word ptr [bp-8]	; тут модуль б
 	mov ax, a
 	mov bx, b
 	mov ma, ax
@@ -45,7 +45,7 @@ l2:	cmp ax, bx
 	xchg ax, dx
 	jmp l2
 l1: xchg ax, bx	
-	jmp l2
+	jmp l2		; ищем нод модулей по алгоритму эвклида
 
 ex:	
 	mov nod, bx
@@ -54,7 +54,7 @@ ex:
 	cwd
 	imul bx
 	idiv nod
-	mov nok, ax
+	mov nok, ax	; нашли нок модулей
 	mov ax, a
 	mov bx, b
 lll:
@@ -66,28 +66,29 @@ lll:
 	jmp nok1
 ll: xchg ax, bx	
 	jmp lll
-nok1:
-	mov ax, nok
-	cmp nok, 0
+nok1:			; установили знак нок
+	mov ax, nok	
+	cmp nok, 0	; если нок отрицательное, то оно и является наибольшим
 	jl fin
-	xor dx,dx
 	mov cx, 1
 	mov es, sp
 l123:
 	imul cx
 	push ax
 	inc cx
-	cmp dx, 0
-	jz l123
+	cmp dx, 0		; условие что Нок уменьшается в 16бит
+	jz l123	
 	pop ax
 fin:
-	mov sp, es
+	mov sp, es		; восстанавливаем значение sp 
 	popa
 	add sp, 10
 	mov sp,bp
 	pop bp
 	ret
 start:
+	mov ax,data
+	mov ds,ax
 	call nok777
     finish
 code ends
